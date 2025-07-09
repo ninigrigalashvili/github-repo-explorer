@@ -60,7 +60,7 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
     <div className='relative w-full max-w-md'>
       <div className='flex gap-2'>
         <div className='relative flex-1'>
-          <Search className='absolute left-3 top-3 h-4 w-4 text-muted-foreground' />
+          <Search className='text-muted-foreground absolute left-3 top-3 h-4 w-4' />
           <Input
             ref={inputRef}
             type='text'
@@ -71,19 +71,19 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
             className='pl-10'
           />
         </div>
-        <Button className='cursor-pointer' onClick={handleManualSearch} disabled={!query.trim()}>
+        <Button onClick={handleManualSearch} disabled={!query.trim()} className='cursor-pointer'>
           Search
         </Button>
       </div>
 
       {showSuggestions && (
-        <Card ref={suggestionsRef} className='absolute z-10 w-full mt-1 max-h-64 overflow-y-auto'>
-          {loading && <div className='p-4 text-center text-sm text-muted-foreground'>Searching...</div>}
+        <Card ref={suggestionsRef} className='absolute z-10 mt-1 max-h-64 w-full overflow-y-auto'>
+          {loading && <div className='text-muted-foreground p-4 text-center text-sm'>Searching...</div>}
 
-          {error && <div className='p-4 text-center text-sm text-destructive'>{error}</div>}
+          {error && <div className='text-destructive p-4 text-center text-sm'>{error}</div>}
 
           {!loading && !error && users.length === 0 && query.trim() && (
-            <div className='p-4 text-center text-sm text-muted-foreground'>No users found</div>
+            <div className='text-muted-foreground p-4 text-center text-sm'>No users found</div>
           )}
 
           {!loading && users.length > 0 && (
@@ -92,7 +92,7 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
                 <button
                   key={user.id}
                   onClick={() => handleUserSelection(user.login)}
-                  className='w-full px-4 py-2 hover:bg-accent hover:text-accent-foreground flex items-center gap-3 text-left'
+                  className='hover:bg-accent hover:text-accent-foreground flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-left'
                 >
                   <Avatar className='h-8 w-8'>
                     <AvatarImage src={user.avatar_url} alt={user.login} />

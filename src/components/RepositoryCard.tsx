@@ -3,49 +3,54 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Star, GitFork, ExternalLink } from 'lucide-react';
 import { GitHubRepository } from '@/types/github';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface RepositoryCardProps {
   repository: GitHubRepository;
 }
 
 export function RepositoryCard({ repository }: RepositoryCardProps) {
+  const router = useRouter();
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
 
+  const handleCardClick = () => {
+    router.push(`/repository/${repository.owner.login}/${repository.name}`);
+  };
+
+  const handleExternalClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(repository.html_url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <Card className='h-full hover:shadow-lg transition-shadow'>
+    <Card className='h-full hover:shadow-lg transition-shadow cursor-pointer' onClick={handleCardClick}>
       <CardHeader className='pb-3'>
         <div className='flex justify-between items-start'>
-          <CardTitle className='text-lg'>
-            <Link
-              href={`/repository/${repository.owner.login}/${repository.name}`}
-              className='hover:text-primary transition-colors'
-            >
-              {repository.name}
-            </Link>
-          </CardTitle>
-          <Button variant='ghost' size='sm' asChild>
-            <a href={repository.html_url} target='_blank' rel='noopener noreferrer' className='flex items-center gap-1'>
-              <ExternalLink className='h-4 w-4' />
-            </a>
+          <CardTitle className='text-lg hover:text-primary transition-colors'>{repository.name}</CardTitle>
+          <Button variant='ghost' size='sm' onClick={handleExternalClick}>
+            <ExternalLink className='h-4 w-4' />
           </Button>
         </div>
       </CardHeader>
-      <CardContent className='space-y-3'>
-        <p className='text-sm text-muted-foreground line-clamp-2'>
-          {repository.description || 'No description available'}
-        </p>
 
-        <div className='flex items-center gap-4 text-sm text-muted-foreground'>
-          <div className='flex items-center gap-1'>
-            <Star className='h-4 w-4' />
-            {repository.stargazers_count}
-          </div>
-          <div className='flex items-center gap-1'>
-            <GitFork className='h-4 w-4' />
-            {repository.forks_count}
+      <CardContent className='flex flex-col justify-between h-full gap-3'>
+        <div className='space-y-3'>
+          <p className='text-sm text-muted-foreground line-clamp-2'>
+            {repository.description || 'No description available'}
+          </p>
+
+          <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+            <div className='flex items-center gap-1'>
+              <Star className='h-4 w-4' />
+              {repository.stargazers_count}
+            </div>
+            <div className='flex items-center gap-1'>
+              <GitFork className='h-4 w-4' />
+              {repository.forks_count}
+            </div>
           </div>
         </div>
 

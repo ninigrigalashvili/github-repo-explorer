@@ -71,7 +71,7 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
             className='pl-10'
           />
         </div>
-        <Button onClick={handleManualSearch} disabled={!query.trim()}>
+        <Button className='cursor-pointer' onClick={handleManualSearch} disabled={!query.trim()}>
           Search
         </Button>
       </div>

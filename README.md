@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+GitHub Repository Explorer
+A modern Next.js application for searching GitHub users and exploring their repositories with real-time autocomplete and detailed repository information.
+Features
 
-## Getting Started
+User Search with Autocomplete: Real-time GitHub user search with suggestions
+Debounced Search: 300ms debouncing to reduce API calls
+Repository Grid: Responsive card layout for repositories
+Repository Details: Comprehensive repository information page
+Responsive Design: Mobile-first design with Tailwind CSS
+Error Handling: User-friendly error messages and loading states
 
-First, run the development server:
+Tech Stack
 
-```bash
+Next.js 14 - React framework with App Router
+TypeScript - Type-safe development
+Tailwind CSS - Utility-first styling
+shadcn/ui - Modern UI components
+GitHub REST API - Repository and user data
+
+Project Structure
+src/
+├── app/
+│ ├── page.tsx # User Search Page
+│ └── repository/[owner]/[repo]/page.tsx # Repository Detail Page
+├── components/
+│ ├── ui/ # shadcn/ui components
+│ ├── SearchInput.tsx # Search with autocomplete
+│ └── RepositoryCard.tsx # Repository display card
+├── lib/
+│ ├── github-api.ts # GitHub API integration
+│ └── hooks/
+│ ├── useDebounce.ts # Debouncing hook
+│ └── useGitHubSearch.ts # GitHub search hook
+└── types/
+└── github.ts # TypeScript definitions
+Setup
+
+Clone and install
+git clone <repository-url>
+cd github-repository-explorer
+npm install
+
+Optional: Add GitHub token for higher rate limits
+h# .env.local
+GITHUB_TOKEN=your_github_token_here
+
+Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Search for GitHub users in the search field
+Select a user from autocomplete suggestions
+Browse their repositories in the grid layout
+Click any repository card for detailed information
 
-## Learn More
+API Rate Limits
 
-To learn more about Next.js, take a look at the following resources:
+Without token: 60 requests/hour
+With GitHub token: 5,000 requests/hour
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployment
+Ready for deployment on Vercel, Netlify, or any Node.js hosting platform.
+License
+MIT License

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ArrowLeft, Star, GitFork, ExternalLink, User, Calendar, Code } from 'lucide-react';
+import { ArrowLeft, Star, GitFork, ExternalLink, User, Code } from 'lucide-react';
 import { GitHubRepository } from '@/types/github';
 
 import { Skeleton } from '@/components/ui/skeleton';
@@ -42,15 +42,6 @@ export default function RepositoryDetail() {
       fetchRepository();
     }
   }, [owner, repo]);
-
-  // Format ISO date string to readable format
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
 
   // Show loading skeleton while fetching data
   if (loading) {
@@ -104,7 +95,7 @@ export default function RepositoryDetail() {
 
         <Card>
           <CardHeader>
-            <div className='flex items-start justify-between'>
+            <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between'>
               <div>
                 <CardTitle className='mb-2 text-3xl'>{repository.name}</CardTitle>
                 <p className='text-muted-foreground mb-4 text-lg'>
@@ -138,7 +129,7 @@ export default function RepositoryDetail() {
               </div>
             </div>
 
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+            <div className='mb-2 flex flex-wrap gap-4 sm:gap-6'>
               <div className='flex items-center gap-2'>
                 <Star className='h-5 w-5 text-yellow-500' />
                 <span className='font-semibold'>{repository.stargazers_count}</span>
@@ -155,17 +146,6 @@ export default function RepositoryDetail() {
                   <Badge variant='secondary'>{repository.language}</Badge>
                 </div>
               )}
-            </div>
-
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-              <div className='text-muted-foreground flex items-center gap-2 text-sm'>
-                <Calendar className='h-4 w-4' />
-                <span>Created: {formatDate(repository.created_at)}</span>
-              </div>
-              <div className='text-muted-foreground flex items-center gap-2 text-sm'>
-                <Calendar className='h-4 w-4' />
-                <span>Updated: {formatDate(repository.updated_at)}</span>
-              </div>
             </div>
           </CardContent>
         </Card>

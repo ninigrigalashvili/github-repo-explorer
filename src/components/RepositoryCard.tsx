@@ -12,14 +12,17 @@ interface RepositoryCardProps {
 export function RepositoryCard({ repository }: RepositoryCardProps) {
   const router = useRouter();
 
+  // Formats ISO date string to locale date
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
 
+  // Navigates to the repository details page
   const handleCardClick = () => {
     router.push(`/repository/${repository.owner.login}/${repository.name}`);
   };
 
+  // Opens the GitHub repo in a new tab, prevents card click
   const handleExternalClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     window.open(repository.html_url, '_blank', 'noopener,noreferrer');

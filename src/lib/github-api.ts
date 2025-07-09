@@ -2,6 +2,7 @@ import { GitHubRepository, GitHubSearchResponse } from '@/types/github';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
+// Generic function to fetch from GitHub API and handle errors
 async function fetchWithErrorHandling<T>(url: string): Promise<T> {
   try {
     const headers: HeadersInit = {};
@@ -13,6 +14,7 @@ async function fetchWithErrorHandling<T>(url: string): Promise<T> {
 
     const response = await fetch(url, { headers });
 
+    // Handle common GitHub API errors
     if (!response.ok) {
       if (response.status === 403) {
         throw new Error('Rate limit exceeded. Please try again later.');
@@ -32,6 +34,7 @@ async function fetchWithErrorHandling<T>(url: string): Promise<T> {
   }
 }
 
+// Search for GitHub users by query string
 export async function searchUsers(query: string): Promise<GitHubSearchResponse> {
   if (!query.trim()) {
     return { total_count: 0, incomplete_results: false, items: [] };
@@ -41,11 +44,13 @@ export async function searchUsers(query: string): Promise<GitHubSearchResponse> 
   return fetchWithErrorHandling<GitHubSearchResponse>(url);
 }
 
+// Get repositories for a specific user
 export async function getUserRepositories(username: string): Promise<GitHubRepository[]> {
   const url = `${GITHUB_API_BASE}/users/${username}/repos?sort=updated&per_page=30`;
   return fetchWithErrorHandling<GitHubRepository[]>(url);
 }
 
+// Get a single repository by owner and repo name
 export async function getRepository(owner: string, repo: string): Promise<GitHubRepository> {
   const url = `${GITHUB_API_BASE}/repos/${owner}/${repo}`;
   return fetchWithErrorHandling<GitHubRepository>(url);

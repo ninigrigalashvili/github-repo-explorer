@@ -9,11 +9,11 @@ import { Search, User } from 'lucide-react';
 import { GitHubUser } from '@/types/github';
 
 interface SearchInputProps {
-  onUserSelect: (username: string) => void;
-  users: GitHubUser[];
-  loading: boolean;
-  error: string | null;
-  onSearchChange: (query: string) => void;
+  onUserSelect: (username: string) => void; // Callback when a user is selected
+  users: GitHubUser[]; // List of users to show as suggestions
+  loading: boolean; // Loading state for search
+  error: string | null; // Error message if search fails
+  onSearchChange: (query: string) => void; // Callback when search query changes
 }
 
 export function SearchInput({ onUserSelect, users, loading, error, onSearchChange }: SearchInputProps) {
@@ -22,6 +22,7 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
+  // Effect to close suggestions when clicking outside the input or dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -37,18 +38,21 @@ export function SearchInput({ onUserSelect, users, loading, error, onSearchChang
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Handles input changes, updates query and triggers search
   const handleInputChange = (value: string) => {
     setQuery(value);
     onSearchChange(value);
     setShowSuggestions(value.length > 0);
   };
 
+  // Handles user selection from suggestions
   const handleUserSelection = (username: string) => {
     setQuery(username);
     setShowSuggestions(false);
     onUserSelect(username);
   };
 
+  // Handles manual search when the button is clicked
   const handleManualSearch = () => {
     if (query.trim()) {
       onUserSelect(query.trim());

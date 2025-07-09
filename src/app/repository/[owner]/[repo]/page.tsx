@@ -19,9 +19,11 @@ export default function RepositoryDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Extract owner and repo from params
   const owner = params.owner as string;
   const repo = params.repo as string;
 
+  // Fetch repository data when owner or repo changes
   useEffect(() => {
     const fetchRepository = async () => {
       try {
@@ -41,6 +43,7 @@ export default function RepositoryDetail() {
     }
   }, [owner, repo]);
 
+  // Format ISO date string to readable format
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -49,6 +52,7 @@ export default function RepositoryDetail() {
     });
   };
 
+  // Show loading skeleton while fetching data
   if (loading) {
     return (
       <div className='container mx-auto px-4 py-8'>
@@ -60,6 +64,7 @@ export default function RepositoryDetail() {
     );
   }
 
+  // Show error message if fetch fails
   if (error) {
     return (
       <div className='container mx-auto px-4 py-8'>
@@ -74,6 +79,7 @@ export default function RepositoryDetail() {
     );
   }
 
+  // Show not found message if repository is null
   if (!repository) {
     return (
       <div className='container mx-auto px-4 py-8'>

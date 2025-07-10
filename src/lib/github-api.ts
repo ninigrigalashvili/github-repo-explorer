@@ -8,8 +8,8 @@ async function fetchWithErrorHandling<T>(url: string): Promise<T> {
     const headers: HeadersInit = {};
 
     // Add GitHub token for higher rate limits (5000/hour vs 60/hour)
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `token ${process.env.GITHUB_TOKEN}`;
+    if (process.env.NEXT_PUBLIC_GITHUB_TOKEN) {
+      headers.Authorization = `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`;
     }
 
     const response = await fetch(url, { headers });
